@@ -11,8 +11,8 @@ final class ScoreConverters {
     static ScoreConverter<String> splittingWithRegex(String regex) {
         return str -> {
             String[] scoresArray = str.split(regex);
-            int leftScore = parseInt(scoresArray[0]);
-            int rightScore = parseInt(scoresArray[1]);
+            int leftScore = parseInt(scoresArray[0].trim());
+            int rightScore = parseInt(scoresArray[1].trim());
             return ScorePair.create(leftScore, rightScore);
         } ;
     }
