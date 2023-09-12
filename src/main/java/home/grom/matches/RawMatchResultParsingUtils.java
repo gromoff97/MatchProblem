@@ -12,9 +12,13 @@ public final class RawMatchResultParsingUtils {
 
     static Function<String, MatchResult> toMatchResultForRespectively(@NonNull Team firstTeam, @NonNull Team secondTeam, @NonNull RawMatchResultProcessingStrategy strategy) {
         return s -> {
-            validateRawMatchResult(s, strategy.getValidationPattern());
-            ScorePair scorePair = strategy.getConversionFunction().apply(s);
-            return new MatchResult(firstTeam, scorePair.getLeftScore(), secondTeam, scorePair.getRightScore());
+            try {
+                validateRawMatchResult(s, strategy.getValidationPattern());
+                ScorePair scorePair = strategy.getConverter().convertFrom(s);
+                return new MatchResult(firstTeam, scorePair.getLeftScore(), secondTeam, scorePair.getRightScore());
+            } catch (Exception e) {
+                throw new MatchParsingConversionException(s, e);
+            }
         };
     }
 
