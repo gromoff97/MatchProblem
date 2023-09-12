@@ -24,7 +24,7 @@ public class App {
         List<String> rawMatchResults = List.of("3:1", "2:2", "0:1", "4:2", "3:a", "3- 12");
 
         // Настройка парсинга с указанием, какая команда в этом списке - слева, какая - справа
-        // Дополнительно можно указать, как обрабатывать данные, и что делать, когда часть данных невалидна
+        // Дополнительно можно указать, как обрабатывать данные
         MatchesParser matchesParser = MatchesParser.builder()
                 .teamOnLeft(homeTeam).teamOnRight(roadTeam)
                 .matchProcessingStrategy(charSoftSplitSkipProcessingStrategy(':'))
