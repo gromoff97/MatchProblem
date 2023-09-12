@@ -3,7 +3,7 @@ package home.grom.matches;
 import lombok.Value;
 
 @Value(staticConstructor = "create")
-public class ScorePair {
+class ScorePair {
     int leftScore;
     int rightScore;
 

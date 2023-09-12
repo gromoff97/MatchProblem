@@ -4,7 +4,7 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import lombok.NonNull;
 
-public final class RawMatchResultParsingUtils {
+final class RawMatchResultParsingUtils {
 
     private RawMatchResultParsingUtils() {
         throw new AssertionError("Current class must not be initialized because it's Utility-class");

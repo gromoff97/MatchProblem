@@ -2,7 +2,7 @@ package home.grom.matches;
 
 import java.util.regex.Pattern;
 
-public final class RawMatchParsingPatterns {
+final class RawMatchParsingPatterns {
 
     private static final String REGEX_SPLIT_PATTERN_FORMAT = "^\\s*(0|[1-9]\\d*)\\s*%s\\s*(0|[1-9]\\d*)\\s*$";
 

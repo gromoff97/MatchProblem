@@ -1,6 +1,6 @@
 package home.grom.matches;
 
-public final class MatchParsingConversionException extends RuntimeException {
+final class MatchParsingConversionException extends RuntimeException {
     private static final String EXCEPTION_MESSAGE_FORMAT = "Could not parse following string: '%s'";
 
     public MatchParsingConversionException(String parsedString, Throwable throwable) {

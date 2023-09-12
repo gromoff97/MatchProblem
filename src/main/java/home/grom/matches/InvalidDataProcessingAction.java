@@ -1,5 +1,5 @@
 package home.grom.matches;
 
-public enum InvalidDataProcessingAction {
+enum InvalidDataProcessingAction {
     FAIL_FAST, SKIP
 }
