@@ -1,19 +1,15 @@
 package home.grom;
 
-import static home.grom.matches.CompetitivePointsAccumulationStrategies.DEFAULT_ON_LOSE_POINTS;
-import static home.grom.matches.CompetitivePointsAccumulationStrategies.DEFAULT_ON_TIE_POINTS;
-import static home.grom.matches.CompetitivePointsAccumulationStrategies.DEFAULT_ON_WIN_POINTS;
+import static home.grom.matches.CompetitivePointsAccumulationStrategies.DEFAULT_LOSE_POINTS;
+import static home.grom.matches.CompetitivePointsAccumulationStrategies.DEFAULT_TIE_POINTS;
+import static home.grom.matches.CompetitivePointsAccumulationStrategies.DEFAULT_WIN_POINTS;
 import static home.grom.matches.CompetitivePointsTable.competitivePointsTableBasedOn;
-import static home.grom.matches.InvalidDataProcessingAction.SKIP;
-import static home.grom.matches.RawMatchResultProcessingStrategies.defaultConversionFunction;
-import static home.grom.matches.RawMatchResultProcessingStrategies.defaultRawMatchResultParsingPattern;
+import static home.grom.matches.RawMatchResultProcessingStrategies.charSoftSplitSkipProcessingStrategy;
 
-import home.grom.matches.CompetitivePointsAccumulationStrategies;
 import home.grom.matches.CompetitivePointsAccumulationStrategy;
 import home.grom.matches.CompetitivePointsTable;
 import home.grom.matches.MatchesData;
 import home.grom.matches.MatchesParser;
-import home.grom.matches.RawMatchResultProcessingStrategy;
 import home.grom.matches.SimpleTeam;
 import java.util.List;
 
@@ -31,11 +27,7 @@ public class App {
         // Дополнительно можно указать, как обрабатывать данные, и что делать, когда часть данных невалидна
         MatchesParser matchesParser = MatchesParser.builder()
                 .teamOnLeft(homeTeam).teamOnRight(roadTeam)
-                .matchProcessingStrategy(RawMatchResultProcessingStrategy.builder()
-                        .validationPattern(defaultRawMatchResultParsingPattern)
-                        .conversionFunction(defaultConversionFunction)
-                        .onInvalidData(SKIP)
-                        .build())
+                .matchProcessingStrategy(charSoftSplitSkipProcessingStrategy(':'))
                 .build();
 
         // "Пропарсить" данные
@@ -43,10 +35,10 @@ public class App {
 
         // Стратегия прибавления competitive-очков командам
         CompetitivePointsAccumulationStrategy pointsAccumulationStrategy = CompetitivePointsAccumulationStrategy.builder()
-                .onWinGain(DEFAULT_ON_WIN_POINTS).onTieGain(DEFAULT_ON_TIE_POINTS).onLoseGain(DEFAULT_ON_LOSE_POINTS)
+                .onWinGain(DEFAULT_WIN_POINTS).onTieGain(DEFAULT_TIE_POINTS).onLoseGain(DEFAULT_LOSE_POINTS)
                 .build();
 
-        // Сформировать таблицу comptetitive-очков участвовавших команд и отобразить их
+        // Сформировать таблицу competitive-очков участвовавших команд и отобразить их
         CompetitivePointsTable resultTable = competitivePointsTableBasedOn(matchesData, pointsAccumulationStrategy);
         resultTable.showTable();
 

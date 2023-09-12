@@ -1,6 +1,6 @@
 package home.grom.matches;
 
-import static home.grom.matches.RawMatchResultProcessingStrategies.defaultRawMatchResultProcessingStrategy;
+import static home.grom.matches.RawMatchResultProcessingStrategies.charSoftSplitFailFastProcessingStrategy;
 
 import lombok.Builder;
 import lombok.NonNull;
@@ -17,7 +17,7 @@ public class MatchesParser {
 
     @NonNull
     @Builder.Default
-    RawMatchResultProcessingStrategy matchProcessingStrategy = defaultRawMatchResultProcessingStrategy();
+    RawMatchResultProcessingStrategy matchProcessingStrategy = charSoftSplitFailFastProcessingStrategy(':');
 
     public static class MatchesParserBuilder {
         public MatchesParserBuilder teamOnLeft(@NonNull Team teamOnLeft) {

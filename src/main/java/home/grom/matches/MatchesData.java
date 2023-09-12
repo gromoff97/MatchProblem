@@ -1,5 +1,6 @@
 package home.grom.matches;
 
+import static home.grom.matches.InvalidDataProcessingAction.SKIP;
 import static home.grom.matches.RawMatchResultParsingUtils.toMatchResultForRespectively;
 import static home.grom.matches.InvalidDataProcessingAction.FAIL_FAST;
 import static java.util.stream.Collectors.toList;
@@ -29,10 +30,15 @@ public final class MatchesData {
                 .filter(s -> usedPattern.matcher(s).matches())
                 .collect(toList());
 
-        if (parser.getMatchProcessingStrategy().getOnInvalidData() == FAIL_FAST && rawMatchesList.size() != stringList.size()) {
+        InvalidDataProcessingAction onInvalidData = parser.getMatchProcessingStrategy().getOnInvalidData();
+        if (onInvalidData == FAIL_FAST && rawMatchesList.size() != stringList.size()) {
             List<String> invalidElements = new ArrayList<>(stringList);
             invalidElements.removeAll(rawMatchesList);
             throw new IllegalArgumentException(String.format(PARSING_ERROR_MESSAGE_OUTPUT_FORMAT, usedPattern, invalidElements));
+        }
+
+        if (onInvalidData != SKIP) {
+            throw new AssertionError("Only these invalid data actions avaliable: " + List.of(FAIL_FAST, SKIP));
         }
 
         List<MatchResult> matchResultList = rawMatchesList.stream()
